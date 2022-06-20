@@ -16,21 +16,21 @@ client = tweepy.Client(bearer_token=BEARER_TOKEN, consumer_key=API_KEY, consumer
 
 all = pd.read_csv("all_ids_join_PRO_only.csv")
 new_col = []
-for index, row in all[6000:15000].iterrows():
+for index, row in all[:15000].iterrows():
     tweet_id = row['id'] 
 
     try:
-      retweeter_ids = api.get_retweeter_ids(id=tweet_id) #list id user yg ngeretweet
+      retweeter_ids = api.get_retweeter_ids(id=tweet_id) #list id user yang retweet
     except:
       retweeter_ids = []
 
     try:
-      liked_ids = client.get_liking_users(id=tweet_id)
+      liked_ids = client.get_liking_users(id=tweet_id) #list id user yang like
     except:
       liked_ids = []
 
 
     new_col.append([retweeter_ids, liked_ids])
 
-pd.DataFrame(new_col).to_csv("6000,15000.csv", index=False)
+pd.DataFrame(new_col).to_csv("0,15000.csv", index=False)
 
